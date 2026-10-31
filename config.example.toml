@@ -1,0 +1,47 @@
+# ctxguard — example config
+#
+# Copy to ~/.config/ctxguard/config.toml (or pass --config PATH).
+# All keys are optional; the defaults are shown.
+
+[general]
+state_dir = "~/.ctxguard"
+
+[thresholds]
+warn_mb = 3.0        # transcript "attention" size
+crit_mb = 5.0        # transcript "danger" size
+active_hours = 72    # ignore transcripts untouched for this long
+cooldown_hours = 12  # do not repeat the same alert inside this window
+growth_mb = 0.5      # ...unless it grew by at least this much
+
+[report]
+gap_hours = 1.0      # a gap between runs longer than this is reported as downtime
+
+# ---------------------------------------------------------------------------
+# A check is one thing that grows and can break the app.
+# Add as many as you like; each one is evaluated independently.
+# ---------------------------------------------------------------------------
+
+# 1) Transcript files: they grow with every turn until the context window is
+#    exceeded and the run fails.
+[[checks]]
+kind = "file_size"
+name = "dsh transcripts"
+root = "~/.dsh/sessions"
+pattern = "**/session.v*.jsonl.zstd"
+# any [thresholds] key above may be overridden per check:
+# warn_mb = 4
+
+# 2) Cookie jar: some Electron apps write one more login cookie per launch and
+#    never expire the old ones. Cookies are not scoped by port, so every run
+#    sends the whole history; past ~16 KB the server answers 431 and the app
+#    looks broken on startup.
+#
+# Enable it by uncommenting. The jar can only be read while the app is closed.
+# [[checks]]
+# kind = "cookie_jar"
+# name = "dsh web cookies"
+# path = "%APPDATA%/@deepseek-ai/dsh-desktop/Network/Cookies"
+# warn_kb = 8
+# crit_kb = 12
+# limit_kb = 16
+# cooldown_hours = 12

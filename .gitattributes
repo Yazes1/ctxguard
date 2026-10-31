@@ -1,0 +1,9 @@
+# Normalise line endings so the repo is identical on every platform.
+* text=auto eol=lf
+
+*.py      text eol=lf
+*.md      text eol=lf
+*.toml    text eol=lf
+*.yml     text eol=lf
+*.yaml    text eol=lf
+LICENSE   text eol=lf

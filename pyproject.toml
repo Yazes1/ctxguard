@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ctxguard"
+version = "0.2.0"
+description = "Read-only growth monitor for AI agent transcripts and cookie jars"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+keywords = ["ai", "agent", "context-window", "monitoring", "observability"]
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Operating System :: OS Independent",
+  "Environment :: Console",
+  "Topic :: System :: Monitoring",
+]
+
+[project.scripts]
+ctxguard = "ctxguard.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
